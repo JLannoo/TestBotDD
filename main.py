@@ -30,7 +30,7 @@ async def on_message(message):
         return
 
     if message.content.startswith('!ayuda'):
-        await message.channel.send(f" __**!hola:**__: Te mando un saludito uwu." +
+        await message.channel.send(f"__**!hola:**__: Te mando un saludito uwu." +
                                      "\n__**!limpiar_chat**__: Borra todos los mensajes del chat. **__CUIDADO:__ PUEDE LLEVAR UN RATO Y ES IRREVERSIBLE ÒWÓ**" +
                                     "\n__**!ayuda**__: Este mensaje kpo, no se que esperabas que te diga jaja re tonto es." +
                                      "\n__**!invite**__: Link de invitacion para agregarme a otro server." +
@@ -39,6 +39,17 @@ async def on_message(message):
 
     if message.content.startswith('!hola'):
         await message.channel.send(f'Hola, {message.author.name}! uwu')
+
+    if message.content.startswith('!recomendar_helado'):
+        gusto = random.choice(GUSTOS)
+
+        await message.channel.send(f'Te recomiendo que comas helado sabor **{gusto}** uwu')
+
+        if(gusto=="MENTA GRANIZADA"):
+            await asyncio.sleep(3)
+            gusto = random.choice(GUSTOS)
+            await message.channel.send(f'Ah no, para, alto asco jaja... \nMejor come helado sabor **{gusto}** uwu')
+
 
     if message.content.startswith('!limpiar_chat'):
         messages = message.channel.history()
