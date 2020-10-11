@@ -38,15 +38,13 @@ async def on_message(message):
     if message.content.startswith('!ayuda'):
         await message.channel.send(f" __**!hola:**__: Te mando un saludito uwu." +
                                      "\n__**!limpiar_chat**__: Borra todos los mensajes del chat." +
+                                     "\n__**!uwu**__: uwu" +
                                     "\n__**!ayuda**__: Este mensaje kpo, no se que esperabas que te diga jaja re tonto es." +
                                      "\n__**!invite**__: Link de invitacion para agregarme a otro server."
                                      )
 
     if message.content.startswith('!hola'):
         await message.channel.send(f'Hola, {message.author.name}! uwu')
-
-    if message.content.startswith('!invite'):
-        await message.channel.send(f'Para invitar a este bot usa: \n {discord.utils.oauth_url(client.user.id,)}')
 
     if message.content.startswith('!limpiar_chat'):
         messages = message.channel.history()
@@ -55,6 +53,12 @@ async def on_message(message):
 
         async for m in messages:
             await m.delete()
+    
+    if message.content.startswith('!uwu'):
+        await message.channel.send("https://assets.change.org/photos/0/tx/qc/VJtXQCOhcJKBaLA-800x450-noPad.jpg?1570672109", tts=False)
+
+    if message.content.startswith('!invite'):
+        await message.channel.send(f'Para invitar a este bot usa: \n {discord.utils.oauth_url(client.user.id,)}')
 
 @client.event
 async def on_member_join(member):
