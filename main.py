@@ -32,7 +32,7 @@ async def on_message(message):
     if message.content.startswith('!ayuda'):
         await message.channel.send(f"__**!hola:**__: Te mando un saludito uwu." +
                                      "\n__**!limpiar_chat**__: Borra todos los mensajes del chat. **__CUIDADO:__ PUEDE LLEVAR UN RATO Y ES IRREVERSIBLE ÒWÓ**" +
-                                     "\n__**!recomendar_gustos**__: Te recomiendo un rico gusto de helado uwu" +
+                                     "\n__**!recomendar_helado**__: Te recomiendo un rico gusto de helado uwu" +
                                     "\n__**!ayuda**__: Este mensaje kpo, no se que esperabas que te diga jaja re tonto es." +
                                      "\n__**!invite**__: Link de invitacion para agregarme a otro server." +
                                      "\n__**!uwu**__: uwu"
