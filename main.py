@@ -9,26 +9,19 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 SERVER = os.getenv('DISCORD_SERVER')
 
 INTENTS = discord.Intents.all()
-GAME= discord.Game("Dickboy and Vaginagirl")
 
-client = discord.Client(intents=INTENTS, Game=GAME)
+client = discord.Client(intents=INTENTS)
 
 @client.event
 async def on_ready():
-    print(f'{client.user} se conectó a Discord!')
+    print(f'{client.user} se conectó a Discord!\n')
     
+    print(f'{client.user} esta conectado a:\n')
     for guild in client.guilds:
-        if guild.name == SERVER:
-            break
+        print(
+            f'{guild.name}(id: {guild.id})'
+        )
 
-    print(
-        f'{client.user} esta conectado a:\n'
-        f'{guild.name}(id: {guild.id})'
-    )
-
-    for channel in client.get_all_channels():
-        if(channel.name == "general"):
-            await channel.send('__Hola, acabo de entrar! uwu__ \nCualquier duda, comunicarse con \"**!ayuda**\"')
 
 @client.event
 async def on_message(message):
@@ -67,6 +60,13 @@ async def on_member_join(member):
         if(channel.name == "general"):
             await channel.send(f'Bienvenido/a **{member.name}** a {channel.guild.name}!'+
                                 '\nCualquier duda, comunicate con **!ayuda** uwu')
+            break
+
+@client.event
+async def on_guild_join(guild):
+    for channel in guild.get_all_channels():
+        if(channel.name == "general"):
+            await channel.send('__Hola, acabo de entrar! uwu__ \nCualquier duda, comunicarse con \"**!ayuda**\"')
             break
 
 client.run(TOKEN)
