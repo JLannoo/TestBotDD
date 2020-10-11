@@ -58,7 +58,8 @@ async def on_message(message):
         await message.channel.send("https://assets.change.org/photos/0/tx/qc/VJtXQCOhcJKBaLA-800x450-noPad.jpg?1570672109", tts=False)
 
     if message.content.startswith('!invite'):
-        await message.channel.send(f'Para invitar a este bot usa: \n {discord.utils.oauth_url(client.user.id,)}')
+        perm = discord.Permissions(permissions=8)
+        await message.channel.send(f'Para invitar a este bot usa: \n {discord.utils.oauth_url(client.user.id,perm)}')
 
 @client.event
 async def on_member_join(member):
