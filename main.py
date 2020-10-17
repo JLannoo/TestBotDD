@@ -9,8 +9,9 @@ import asyncio
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUSTOS = ["ALMENDRADO", "FRUTOS DEL BOSQUE", "CAPPUCCINO", "AMERICANA", "GRANIZADO", "ANANÁ A LA CREMA", "CREMA DE LIMÓN", "BANANA", "TRAMONTANA", "BANANA SPLIT", "VAINILLA", "BANANITA", "MENTA GRANIZADA", "CEREZA A LA CREMA", "HAVACHOC", "COCO", "MASCARPONE", "COOKIES & CREAM", "CREMA DEL CIELO", "LEMON PIE", "CREMA DE FRUTILLAS", "CREMA DE HIGOS", "DURAZNO A LA CREMA", "FLAN", "SÚPER FLAN", "FRUTILLA A LA CREMA", "MOUSE DE MELÓN CON ARANDANOS", "CHOCOLATE BORRACHO", "CHOCOLATE YO", "CREMA RUSA", "QUINOTOS AL WHISKY", "PASAS AL RHUM", "SAMBAYÓN", "SAMBAYÓN GRANIZADO", "SOPA INGLESA", "TIRAMISÚ", "CHOCOLATE", "CHOCOLATE AMARGO", "CHOCOLATE BLANCO", "CHOCOLATE CON ALMENDRAS", "CHOCOLATE TRIPLE", "CHOCOLATE CON NUEZ", "CHOCOLATE EXPLOSIVO", "CHOCOLATE MANTECOL", "CHOCOLATE PATAGÓNICO", "BOMBÓN ROCHER", "CHOCOLATE SUIZO", "DULCE DE LECHE", "DULCE DE LECHE BOMBÓN", "DULCE DE LECHE CON MERENGUE", "DULCE DE LECHE GRANIZADO", "DULCE DE LECHE SPLIT", "ANANÁ", "DURAZNO", "FRUTILLA", "LIMÓN", "MARACUYÁ", "LIMÓN CON FRUTILLAS ", "MANZANA VERDE", "NARANJA", "FRAMBUESA", "CREMA CHANTILLY", "CREMA FLAN", "ARCO IRIS", "CREMA A LA REINA", "CREMA ITALIA", "BANANA A LA CREMA", "BANANITA DOLCA", "HIGOS AL COGNAC", "CEREZA A LA PANNA", "CREMA DON PEDRO", "CREMA MOKA", "SAMBAYON", "PISTACHO", "CREMA TRAMONTANA", "MOUSSE DE MARACUJA", "CREMA DE ARANDANOS", "DULCE DE LECHE CON NUEZ", "DULCE DE LECHE TENTACION", "DULCE DE LECHE MARROC", "CHOCOLATE C/ALMENDRAS", "CHOCOLATE CON PASAS", "CHOCOLATE VITTORIO", "CHOCOLATE NEVADO", "FRUTILLA AL AGUA", "MANZANA", "MELON", "ANANA", "LIMON", "LIMON CON CEREZA", "LIMON CON FRUTILLA", "YOGURT", "MASCARPONE VITTORIO", "CREMA BEYLI´S", "CREMA ROCHER", "FIORDIBOSCO", "MOUSSE CHOCOLATE", "MOUSSE DULCE DE LECHE", "SELVA NEGRA"]
-INTENTS = discord.Intents.all()
+print(len(GUSTOS))
 
+INTENTS = discord.Intents.all()
 client = discord.Client(intents=INTENTS)
 
 @client.event
@@ -42,12 +43,14 @@ async def on_message(message):
         await message.channel.send(f'Hola, {message.author.name}! uwu')
 
     if message.content.startswith('!recomendar_helado'):
+        mensaje = message.content[message.content.find(" ")+1:] #USADO PARA DEBUG
         gusto = random.choice(GUSTOS)
 
+        if(mensaje == "menta"): gusto = "MENTA GRANIZADA"
         await message.channel.send(f'Te recomiendo que comas helado sabor **{gusto}** uwu')
 
         if(gusto=="MENTA GRANIZADA"):
-            await asyncio.sleep(3)
+            await asyncio.sleep(2)
             gusto = random.choice(GUSTOS)
             await message.channel.send(f'Ah no, para, alto asco jaja... \nMejor come helado sabor **{gusto}** uwu')
 
@@ -70,17 +73,16 @@ async def on_message(message):
 @client.event
 async def on_member_join(member):
     for channel in client.get_all_channels():
-        if(channel.name == "general"):
+        if(channel.name == "general" and channel.guild == member.guild):
             await channel.send(f'Bienvenido/a **{member.name}** a {channel.guild.name}!'+
                                 '\nCualquier duda, comunicate con **!ayuda** uwu')
             break
 
 @client.event
 async def on_guild_join(guild):
-    for channel in guild.get_all_channels():
-        if(channel.name == "general"):
-            await channel.send('__Hola, acabo de entrar! uwu__ \nCualquier duda, comunicarse con \"**!ayuda**\"')
-            break
+    general = discord.utils.find(lambda x: x.name == 'general',  guild.text_channels)
+    if general and general.permissions_for(guild.me).send_messages:
+        await general.send(f'Hola, soy **uwuBot** y soy nuevo en este server, tratenme bien uwu \n Cualquier duda comunicarse con **\"!ayuda\"**')
 
 client.run(TOKEN)
 
